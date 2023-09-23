@@ -124,7 +124,7 @@ class Mod implements IPostDBLoadMod {
         }
         //change spawn% for batteries on bots. the durability is adjusted in a patch.
         for (let bot in botDB) {
-            botDB[bot].chances.mods.mod_equipment = 50;
+            botDB[bot].chances.mods.mod_equipment = config.SpawnChance;
         }
         //Jaeger trade for cr2032
         db.getTables().traders["5c0647fdd443bc2504c2d371"].assort.items.push({
@@ -153,10 +153,10 @@ class Mod implements IPostDBLoadMod {
         hideoutProduction.push(
             {
                 "_id": "cr2032Craft0",
-                "areaType": 10,
+                "areaType": 4,
                 "requirements": [
                     {
-                        "areaType": 10, //Lavatory = 2, WorkBench = 10
+                        "areaType": 4, //Lavatory = 2, WorkBench = 10
                         "requiredLevel": 1,
                         "type": "Area"
                     },
@@ -187,10 +187,10 @@ class Mod implements IPostDBLoadMod {
             {
                 // Induction!
                 "_id": "cr123Recharge0",
-                "areaType": 2,
+                "areaType": 4,
                 "requirements": [
                     {
-                        "areaType": 2, //Lavatory = 2, WorkBench = 10
+                        "areaType": 4, //Lavatory = 2, WorkBench = 10, Generator = 4
                         "requiredLevel": 1,
                         "type": "Area"
                     },
@@ -225,39 +225,12 @@ class Mod implements IPostDBLoadMod {
                 "productionLimitCount": 0,
                 "isEncoded": false
             },
-            /*{ // Car Battery Recharge Test
-                "_id": "carBatteryTest1",
-                "areaType": 2,
-                "requirements": [
-                    {
-                        "areaType": 2,
-                        "requiredLevel": 2,
-                        "type": "Area"
-                    },
-                    {
-                        "templateId": carBatteryID, //Car battery
-                        "count": 1,
-                        "isFunctional": false,
-                        "resource": 110,
-                        "isEncoded": false,
-                        "type": "Tool"
-                    }
-                ],
-                "productionTime": 10, // seconds
-                "needFuelForAllProductionTime": false,
-                "locked": false,
-                "endProduct": carBatteryID,
-                "continuous": false,
-                "count": 1,
-                "productionLimitCount": 0,
-                "isEncoded": false
-            },*/
             { // Car Battery!
                 "_id": "cr123Recharge1",
-                "areaType": 2,
+                "areaType": 4,
                 "requirements": [
                     {
-                        "areaType": 2,
+                        "areaType": 4,
                         "requiredLevel": 2,
                         "type": "Area"
                     },
@@ -295,10 +268,10 @@ class Mod implements IPostDBLoadMod {
             },
             { // Normal charging :(
                 "_id": "cr123Recharge2",
-                "areaType": 10,
+                "areaType": 4,
                 "requirements": [
                     {
-                        "areaType": 10,
+                        "areaType": 4,
                         "requiredLevel": 3,
                         "type": "Area"
                     },

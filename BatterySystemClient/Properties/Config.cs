@@ -7,6 +7,9 @@ namespace BatterySystem.Configs
 		public static ConfigEntry<bool> EnableMod { get; private set; }
 		public static ConfigEntry<bool> EnableLogs { get; private set; }
 		public static ConfigEntry<float> DrainMultiplier { get; private set; }
+		public static ConfigEntry<float> DeviceDrainMulti {  get; private set; }
+		public static ConfigEntry<float> CollimatorDrainMulti { get; private set; }
+		public static ConfigEntry<float> SpecialDrainMulti { get; private set; }
 		public static ConfigEntry<bool> EnableHeadsets { get; private set; }
 		public static ConfigEntry<bool> AutoUnfold { get; private set; }
 		//public static ConfigEntry<int> SpawnDurabilityMin { get; private set; }
@@ -36,8 +39,23 @@ namespace BatterySystem.Configs
 					null,
 					new ConfigurationManagerAttributes { IsAdvanced = true, Order = 50 }));
 
-				DrainMultiplier = Config.Bind(generalSettings, "Battery Drain Multiplier", 1f,
+				DrainMultiplier = Config.Bind(generalSettings, "Global Drain Multiplier", 1f,
 					new ConfigDescription("Adjust the drain multiplier when NVG is on. By default a battery lasts an hour on NVGs and 2.5 hours on collimators.",
+					new AcceptableValueRange<float>(0f, 10f),
+					new ConfigurationManagerAttributes { IsAdvanced = false, Order = 0 }));
+
+				DeviceDrainMulti = Config.Bind(generalSettings, "Tactical Device Drain Multiplier", 1f,
+					new ConfigDescription("Tactical Devices, such as flashlights and lasers.",
+					new AcceptableValueRange<float>(0f, 10f),
+					new ConfigurationManagerAttributes { IsAdvanced = false, Order = 0 }));
+
+				CollimatorDrainMulti = Config.Bind(generalSettings, "Collimator Drain Multiplier", 1f,
+					new ConfigDescription("Collimators.",
+					new AcceptableValueRange<float>(0f, 10f),
+					new ConfigurationManagerAttributes { IsAdvanced = false, Order = 0 }));
+
+				SpecialDrainMulti = Config.Bind(generalSettings, "Special Sight Drain Multiplier", 1f,
+					new ConfigDescription("NV and Thermal.",
 					new AcceptableValueRange<float>(0f, 10f),
 					new ConfigurationManagerAttributes { IsAdvanced = false, Order = 0 }));
 
