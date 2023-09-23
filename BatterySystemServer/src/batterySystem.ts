@@ -41,9 +41,6 @@ class Mod implements IPostDBLoadMod {
         items[carBatteryID]._props.MaxResource = 100;
         items[carBatteryID]._props.Resource = 100;
 
-
-
-
         //Credit to Jehree! // 16 locales, wtf?
         for (const locale of locales) {
             locale[`${rchblBatteryID} Name`] = "CR123 Rechargeable Battery";
