@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Comfort.Common;
 using UnityEngine;
 using EFT;
-using HarmonyLib;
 using BatterySystem.Configs;
 using EFT.InventoryLogic;
 using System.Linq;
@@ -19,7 +18,7 @@ namespace BatterySystem
 	 * Sound when toggling battery runs out or is removed or added
 	 * battery recharger - idea by Props
 	 */
-	[BepInPlugin("com.jiro.batterysystem", "BatterySystem", "1.4.1")]
+	[BepInPlugin("com.jiro.batterysystem", "BatterySystem", "1.5.0")]
 	//[BepInDependency("com.spt-aki.core", "3.8.0")]
 	public class BatterySystemPlugin : BaseUnityPlugin
 	{
