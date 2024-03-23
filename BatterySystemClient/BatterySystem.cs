@@ -283,7 +283,7 @@ namespace BatterySystem
 							continue;
 						}*/
 
-						if (key.SightMod.Item.Template.Parent._id != "55818ad54bdc2ddc698b4569" && 
+						if (key.SightMod.Item.Template.Parent._id != "55818ad54bdc2ddc698b4569" &&
 							key.SightMod.Item.Template.Parent._id != "5c0a2cec0db834001b7ce47d") //Exceptions for hhs-1 (tan)
 							optic.enabled = _drainingSightBattery;
 					}
@@ -437,14 +437,15 @@ namespace BatterySystem
 		}
 	}
 
-	//When Aiming down, check sight
+	//When Aiming down, check sight  GCLASSES UP TO DATE!
 	public class AimSightPatch : ModulePatch
 	{
 		private static FieldInfo playerInterfaceField;
 		protected override MethodBase GetTargetMethod()
 		{
-			playerInterfaceField = AccessTools.Field(typeof(ProceduralWeaponAnimation), "ginterface114_0");
-			return AccessTools.Method(typeof(ProceduralWeaponAnimation), "method_21");
+			//TODO: Fix this, wrong interface
+			playerInterfaceField = AccessTools.Field(typeof(ProceduralWeaponAnimation), "_firearmAnimationData");
+			return AccessTools.Method(typeof(ProceduralWeaponAnimation), "method_23");
 		}
 
 		[PatchPostfix]
@@ -452,7 +453,7 @@ namespace BatterySystem
 		{
 			if (__instance != null)
 			{
-				GInterface114 playerField = (GInterface114)playerInterfaceField.GetValue(__instance);
+				GInterface127 playerField = (GInterface127)playerInterfaceField.GetValue(__instance);
 				if (BatterySystemPlugin.InGame() && playerField?.Weapon != null && Singleton<GameWorld>.Instance.GetAlivePlayerByProfileID(playerField.Weapon.Owner.ID).IsYourPlayer)
 				{
 					BatterySystem.CheckSightIfDraining();
@@ -460,17 +461,17 @@ namespace BatterySystem
 			}
 		}
 	}
-	//Throws NullRefError.
+	//Throws NullRefError, GCLASSES ARE UP TO DATE
 	public class GetBoneForSlotPatch : ModulePatch
 	{
-		private static GClass707.GClass708 _gClass = new GClass707.GClass708();
+		private static GClass674.GClass675 _gClass = new GClass674.GClass675();
 		protected override MethodBase GetTargetMethod()
 		{
-			return AccessTools.Method(typeof(GClass707), "GetBoneForSlot");
+			return AccessTools.Method(typeof(GClass674), "GetBoneForSlot");
 		}
 
 		[PatchPrefix]
-		public static void Prefix(ref GClass707 __instance, IContainer container)
+		public static void Prefix(ref GClass674 __instance, IContainer container)
 		{
 			if (!__instance.ContainerBones.ContainsKey(container) && container.ID == "mod_equipment")
 			{
@@ -574,7 +575,7 @@ namespace BatterySystem
 			}
 		}
 	}
-	
+
 	/*
 	public class FoldableSightPatch : ModulePatch
 	{
