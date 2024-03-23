@@ -1,5 +1,5 @@
-import { MinMax } from "../../../models/common/MinMax";
-import { Ixyz } from "./Ixyz";
+import { MinMax } from "@spt-aki/models/common/MinMax";
+import { Ixyz } from "@spt-aki/models/eft/common/Ixyz";
 export interface ILocationBase {
     AccessKeys: string[];
     AirdropParameters: AirdropParameter[];
@@ -18,6 +18,8 @@ export interface ILocationBase {
     BotMaxPlayer: number;
     BotMaxTimePlayer: number;
     BotNormal: number;
+    BotSpawnCountStep: number;
+    BotSpawnPeriodCheck: number;
     BotSpawnTimeOffMax: number;
     BotSpawnTimeOffMin: number;
     BotSpawnTimeOnMax: number;
@@ -30,6 +32,7 @@ export interface ILocationBase {
     Enabled: boolean;
     EnableCoop: boolean;
     GlobalLootChanceModifier: number;
+    GlobalContainerChanceModifier: number;
     IconX: number;
     IconY: number;
     Id: string;
@@ -47,6 +50,7 @@ export interface ILocationBase {
     MinPlayers: number;
     MaxCoopGroup: number;
     Name: string;
+    NonWaveGroupScenario: INonWaveGroupScenario;
     NewSpawn: boolean;
     OcculsionCullingEnabled: boolean;
     OldSpawn: boolean;
@@ -85,6 +89,12 @@ export interface ILocationBase {
     users_summon_seconds: number;
     waves: Wave[];
 }
+export interface INonWaveGroupScenario {
+    Chance: number;
+    Enabled: boolean;
+    MaxToBeGroup: number;
+    MinToBeGroup: number;
+}
 export interface ILimit extends MinMax {
     items: any[];
 }
@@ -122,6 +132,8 @@ export interface BossLocationSpawn {
     TriggerId: string;
     TriggerName: string;
     Delay?: number;
+    ForceSpawn?: boolean;
+    IgnoreMaxBots?: boolean;
     Supports?: BossSupport[];
     sptId?: string;
 }
@@ -161,6 +173,7 @@ export interface SpawnPointParam {
     BotZoneName: string;
     Categories: string[];
     ColliderParams: ColliderParams;
+    CorePointId: number;
     DelayToCanSpawnSec: number;
     Id: string;
     Infiltration: string;
@@ -177,9 +190,11 @@ export interface Props {
     Radius: number;
 }
 export interface Exit {
+    /** % Chance out of 100 exit will appear in raid */
     Chance: number;
     Count: number;
     EntryPoints: string;
+    EventAvailable: boolean;
     ExfiltrationTime: number;
     ExfiltrationType: string;
     RequiredSlot?: string;
@@ -207,6 +222,7 @@ export interface Wave {
     time_max: number;
     time_min: number;
     sptId?: string;
+    ChanceGroup?: number;
 }
 export declare enum WildSpawnType {
     ASSAULT = "assault",

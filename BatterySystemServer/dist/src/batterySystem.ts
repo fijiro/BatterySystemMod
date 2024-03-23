@@ -124,7 +124,8 @@ class Mod implements IPostDBLoadMod {
         }
         //change spawn% for batteries on bots. the durability is adjusted in a patch.
         for (let bot in botDB) {
-            botDB[bot].chances.mods.mod_equipment = 50;
+           // botDB[bot].chances.equipmentMods.mod_equipment = 50;
+            //botDB[bot].chances.weaponMods.mod_equipment = 50;
         }
         //Jaeger trade for cr2032
         db.getTables().traders["5c0647fdd443bc2504c2d371"].assort.items.push({
@@ -148,7 +149,7 @@ class Mod implements IPostDBLoadMod {
                 ]
             ];
         db.getTables().traders["5c0647fdd443bc2504c2d371"].assort.loyal_level_items["cr2032barter1"] = 1;
-
+        /*
         //add hideout crafts for batteries
         hideoutProduction.push(
             {
@@ -251,7 +252,7 @@ class Mod implements IPostDBLoadMod {
                 "count": 1,
                 "productionLimitCount": 0,
                 "isEncoded": false
-            },*/
+            },**
             { // Car Battery!
                 "_id": "cr123Recharge1",
                 "areaType": 2,
@@ -365,8 +366,8 @@ class Mod implements IPostDBLoadMod {
                 "count": 1,
                 "productionLimitCount": 0,
                 "isEncoded": false
-            },*/
-        );
+            },**
+        );*/
         logger.success("BatterySystem has been applied!");
     }
 }

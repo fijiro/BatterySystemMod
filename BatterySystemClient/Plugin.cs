@@ -20,13 +20,14 @@ namespace BatterySystem
 	 * battery recharger - idea by Props
 	 */
 	[BepInPlugin("com.jiro.batterysystem", "BatterySystem", "1.4.1")]
-	[BepInDependency("com.spt-aki.core", "3.6.0")]
+	//[BepInDependency("com.spt-aki.core", "3.8.0")]
 	public class BatterySystemPlugin : BaseUnityPlugin
 	{
 		private static float _mainCooldown = 1f;
 		private static Dictionary<string, float> _headWearDrainMultiplier = new Dictionary<string, float>();
 		public static Dictionary<Item, bool> batteryDictionary = new Dictionary<Item, bool>();
 		//resource drain all batteries that are on // using dictionary to help and sync draining batteries
+		
 		public void Awake()
 		{
 			BatterySystemConfig.Init(Config);
