@@ -151,7 +151,7 @@ namespace BatterySystem
 	{
 		protected override MethodBase GetTargetMethod()
 		{
-			return AccessTools.Method(typeof(Player), "UpdatePhones");
+			return AccessTools.Method(nameof(Player.UpdatePhones));
 		}
 		[PatchPostfix]
 		public static void PatchPostfix(ref Player __instance) //BetterAudio __instance

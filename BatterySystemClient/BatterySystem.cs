@@ -31,7 +31,7 @@ namespace BatterySystem
 		private static ResourceComponent _earPieceBattery = null;
 		private static bool _drainingEarPieceBattery = false;
 		public static float compressorMakeup;
-		//compressor is used because the default 
+		// compressor is used because the default 
 		public static float compressor;
 
 		public static Dictionary<SightModVisualControllers, ResourceComponent> sightMods = new Dictionary<SightModVisualControllers, ResourceComponent>();
