@@ -149,7 +149,7 @@ class Mod implements IPostDBLoadMod {
                 ]
             ];
         db.getTables().traders["5c0647fdd443bc2504c2d371"].assort.loyal_level_items["cr2032barter1"] = 1;
-        /*
+        
         //add hideout crafts for batteries
         hideoutProduction.push(
             {
@@ -252,7 +252,7 @@ class Mod implements IPostDBLoadMod {
                 "count": 1,
                 "productionLimitCount": 0,
                 "isEncoded": false
-            },**
+            },**/
             { // Car Battery!
                 "_id": "cr123Recharge1",
                 "areaType": 2,
@@ -333,7 +333,7 @@ class Mod implements IPostDBLoadMod {
                 "count": 3,
                 "productionLimitCount": 0,
                 "isEncoded": false
-            }/*,
+            },/*
             { // Normal charging FLIR :(
                 "_id": "flirRecharge0",
                 "areaType": 10,
@@ -366,8 +366,8 @@ class Mod implements IPostDBLoadMod {
                 "count": 1,
                 "productionLimitCount": 0,
                 "isEncoded": false
-            },**
-        );*/
+            },*/
+        );
         logger.success("BatterySystem has been applied!");
     }
 }
