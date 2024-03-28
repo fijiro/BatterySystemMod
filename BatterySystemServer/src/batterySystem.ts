@@ -124,7 +124,7 @@ class Mod implements IPostDBLoadMod {
         }
         //change spawn% for batteries on bots. the durability is adjusted in a patch.
         for (let bot in botDB) {
-           // botDB[bot].chances.equipmentMods.mod_equipment = 50;
+            //botDB[bot].chances.equipmentMods.mod_equipment = 50;
             //botDB[bot].chances.weaponMods.mod_equipment = 50;
         }
         //Jaeger trade for cr2032

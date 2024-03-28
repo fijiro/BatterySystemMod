@@ -14,6 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using Comfort.Common;
+using Aki.Reflection.Utils;
 
 namespace BatterySystem
 {
@@ -94,12 +95,32 @@ namespace BatterySystem
 	//Check weapon sight when aiming down
 	public class AimSightPatch : ModulePatch
 	{
-		private static FieldInfo _playerInterfaceField;
+		//private static Type _pwaType;
+		private static FieldInfo _firearmControllerField;
+		private static MethodInfo _updateAimMethod;
+
 		protected override MethodBase GetTargetMethod()
 		{
-			//TODO: Fix this, wrong interface
-			_playerInterfaceField = AccessTools.Field(typeof(ProceduralWeaponAnimation), "_firearmAnimationData");
-			return AccessTools.Method(typeof(ProceduralWeaponAnimation), "method_23");
+			//Gives ProceduralWeaponAnimation type
+			//unnecessary.
+			//_pwaType = PatchConstants.EftTypes.Single(type => type.Name == "ProceduralWeaponAnimation");
+			//TODO: use reflection instead of gclass
+			_firearmControllerField = AccessTools.Field(typeof(ProceduralWeaponAnimation), "_firearmController");
+			/* Unnecessary.
+			_firearmDataField = AccessTools.GetDeclaredFields(_pwaType).FirstOrDefault(field =>
+		{
+			return field.FieldType.Equals(typeof(Player.FirearmController));
+		});*/
+			
+			//Finds a method that has a (bool forced = false) parameter. Works in 3.8.0
+			//necessary, is method_NUM where NUM changes between patches.
+			_updateAimMethod = AccessTools.GetDeclaredMethods(typeof(ProceduralWeaponAnimation)).FirstOrDefault(method =>
+			{
+				var parameters = method.GetParameters();
+				return parameters.Length == 1 && parameters[0].Name == "forced" && parameters[0].ParameterType == typeof(bool);
+			});
+
+			return _updateAimMethod;
 		}
 
 		[PatchPostfix]
@@ -107,7 +128,7 @@ namespace BatterySystem
 		{
 			if (__instance != null)
 			{
-				GInterface127 playerField = (GInterface127)_playerInterfaceField.GetValue(__instance);
+				var playerField = (Player.FirearmController)_firearmControllerField.GetValue(__instance);
 				if (BatterySystemPlugin.InGame() && playerField?.Weapon != null && Singleton<GameWorld>.Instance.GetAlivePlayerByProfileID(playerField.Weapon.Owner.ID).IsYourPlayer)
 				{
 					BatterySystem.CheckSightIfDraining();
@@ -116,12 +137,15 @@ namespace BatterySystem
 		}
 	}
 	//Throws NullRefError?
+	// Adds dummy bones for weapon modding window.
 	//TODO: Use reflection instead of gclass
 	public class GetBoneForSlotPatch : ModulePatch
 	{
 		private static GClass674.GClass675 _gClass = new GClass674.GClass675();
+		private static Type _gClassType;
 		protected override MethodBase GetTargetMethod()
 		{
+			//_gClassType = PatchConstants.EftTypes.SingleOrDefault(type => type.get == "GClass674");
 			return AccessTools.Method(typeof(GClass674), "GetBoneForSlot");
 		}
 
@@ -151,7 +175,7 @@ namespace BatterySystem
 	{
 		protected override MethodBase GetTargetMethod()
 		{
-			return AccessTools.Method(nameof(Player.UpdatePhones));
+			return typeof(Player).GetMethod(nameof(Player.UpdatePhones));
 		}
 		[PatchPostfix]
 		public static void PatchPostfix(ref Player __instance) //BetterAudio __instance
