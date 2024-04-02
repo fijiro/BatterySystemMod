@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BatterySystem.cs" />
+    <Compile Include="Patches.cs" />
     <Compile Include="Plugin.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Config.cs" />
@@ -106,4 +107,12 @@
     <Content Include="Dependencies\UnityEngine.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(TargetPath)" "D:\SPT-AKI 3.8.0\BepInEx\Plugins\Jiro-BatterySystem\$(TargetName).dll"
+if $(ConfigurationName) == Debug (
+    copy "$(ProjectDir)$(OutDir)$(TargetName).pdb" "D:\SPT-AKI 3.8.0\BepInEx\Plugins\Jiro-BatterySystem\$(TargetName).pdb"
+) else (
+    del "$(ProjectDir)\..\..\BepInEx\plugins\$(TargetName).pdb"
+)</PostBuildEvent>
+  </PropertyGroup>
 </Project>
