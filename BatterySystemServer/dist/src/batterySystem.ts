@@ -51,7 +51,7 @@ class Mod implements IPostDBLoadMod {
             locale[`${rchblBatteryID} Description`] = "A singular CR123A Battery. These are commonly used in military and hunting sights.";
             locale[`${dBatteryID} Name`] = "CR2032 Battery";
             locale[`${dBatteryID} ShortName`] = "CR2032";
-            locale[`${dBatteryID} Description`] = "A singular CR2032 Battery. These are commonly used in military and hunting sights.";
+            locale[`${dBatteryID} Description`] = "A multipurpose CR2032 Battery. Used from personal computers to military grade sights.";
         };
 
         // huge thanks and credit to jbs4mx! https://github.com/jbs4bmx/SpecialSlots/
@@ -123,9 +123,14 @@ class Mod implements IPostDBLoadMod {
             }
         }
         //change spawn% for batteries on bots. the durability is adjusted in a patch.
+        //make spawn chance lower for scavs in the future?
         for (let bot in botDB) {
-            //botDB[bot].chances.equipmentMods.mod_equipment = 50;
-            //botDB[bot].chances.weaponMods.mod_equipment = 50;
+            if (botDB[bot].chances.equipmentMods != undefined) {
+                botDB[bot].chances.equipmentMods.mod_equipment = 50;
+            }
+            if (botDB[bot].chances.weaponMods != undefined) {
+                botDB[bot].chances.weaponMods.mod_equipment = 50;
+            }
         }
         //Jaeger trade for cr2032
         db.getTables().traders["5c0647fdd443bc2504c2d371"].assort.items.push({

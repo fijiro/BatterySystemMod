@@ -106,7 +106,7 @@ namespace BatterySystem
 			//_pwaType = PatchConstants.EftTypes.Single(type => type.Name == "ProceduralWeaponAnimation");
 			//TODO: use reflection instead of gclass
 			_firearmControllerField = AccessTools.Field(typeof(ProceduralWeaponAnimation), "_firearmController");
-			/* Unnecessary.
+			/* Unnecessary reflection.
 			_firearmDataField = AccessTools.GetDeclaredFields(_pwaType).FirstOrDefault(field =>
 		{
 			return field.FieldType.Equals(typeof(Player.FirearmController));
@@ -137,16 +137,25 @@ namespace BatterySystem
 		}
 	}
 	//Throws NullRefError?
+	//UNNECESSARY???? WHAT
 	// Adds dummy bones for weapon modding window.
 	//TODO: Use reflection instead of gclass
+	/*
 	public class GetBoneForSlotPatch : ModulePatch
 	{
 		private static GClass674.GClass675 _gClass = new GClass674.GClass675();
 		private static Type _gClassType;
+		private static string _methodName = "GetBoneForSlot";
 		protected override MethodBase GetTargetMethod()
 		{
-			//_gClassType = PatchConstants.EftTypes.SingleOrDefault(type => type.get == "GClass674");
-			return AccessTools.Method(typeof(GClass674), "GetBoneForSlot");
+			_gClassType = PatchConstants.EftTypes.Single(type => {
+				//If type has a method called _methodName, select the type
+				string methodInfo = AccessTools.GetMethodNames(type)
+				.FirstOrDefault(name => name.Equals(_methodName));
+				return methodInfo != null; 
+			});
+			Logger.LogWarning(_gClassType.FullName);
+			return AccessTools.Method(_gClassType, _methodName);
 		}
 
 		[PatchPrefix]
@@ -169,7 +178,7 @@ namespace BatterySystem
 				__instance.ContainerBones.Add(container, _gClass);
 			}
 		}
-	}
+	}*/
 
 	public class UpdatePhonesPatch : ModulePatch
 	{
@@ -269,6 +278,7 @@ namespace BatterySystem
 				if (BatterySystemConfig.EnableLogs.Value)
 					Logger.LogInfo("FindAimTransforms at " + Time.time);
 			//AutofoldableSight.On == On when folds, unfold false
+			//Invoke a method that folds sight when adding a sight to a weapon.
 		}
 	}*/
 

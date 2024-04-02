@@ -19,14 +19,14 @@ namespace BatterySystem
 	 * battery recharger - idea by Props
 	 */
 	[BepInPlugin("com.jiro.batterysystem", "BatterySystem", "1.5.0")]
-	//[BepInDependency("com.spt-aki.core", "3.8.0")]
+	//[BepInDependency("com.AKI.core", "3.8.0")]
 	public class BatterySystemPlugin : BaseUnityPlugin
 	{
 		private static float _mainCooldown = 1f;
 		private static Dictionary<string, float> _headWearDrainMultiplier = new Dictionary<string, float>();
 		public static Dictionary<Item, bool> batteryDictionary = new Dictionary<Item, bool>();
 		//resource drain all batteries that are on // using dictionary to help and sync draining batteries
-		
+
 		public void Awake()
 		{
 			BatterySystemConfig.Init(Config);
@@ -34,7 +34,7 @@ namespace BatterySystem
 			{
 				new PlayerInitPatch().Enable();
 				new AimSightPatch().Enable();
-				new GetBoneForSlotPatch().Enable();
+				//new GetBoneForSlotPatch().Enable();
 				if (BatterySystemConfig.EnableHeadsets.Value)
 					new UpdatePhonesPatch().Enable();
 				new ApplyItemPatch().Enable();
@@ -70,14 +70,17 @@ namespace BatterySystem
 				return true;
 			else return false;
 		}
-
+		//TODO: Throws InvalidOperationException: Collection was modified: enumeration operation may not execute.
 		private static void DrainBatteries()
 		{
-			foreach (Item item in batteryDictionary.Keys)
+			//here?
+			for (int i = batteryDictionary.Count - 1; i >= 0; i--)
 			{
+				Item item = batteryDictionary.Keys.ElementAt(i);
 				if (batteryDictionary[item]) // == true
 				{
-					if (BatterySystem.headWearBattery != null && item.IsChildOf(BatterySystem.headWearItem) //for headwear nvg/t-7
+					// Drain headwear NVG/Thermal
+					if (BatterySystem.headWearBattery != null && item.IsChildOf(BatterySystem.headWearItem)
 						&& BatterySystem.headWearItem.GetItemComponentsInChildren<TogglableComponent>().FirstOrDefault()?.On == true)
 					{
 						//Default battery lasts 1 hr * configmulti * itemmulti, itemmulti was Hazelify's idea!
@@ -92,9 +95,10 @@ namespace BatterySystem
 
 						}
 					}
-					else if (item.GetItemComponentsInChildren<ResourceComponent>(false).FirstOrDefault() != null) //for sights, earpiece and tactical devices
+					//for sights, earpiece and tactical devices
+					else if (item.GetItemComponentsInChildren<ResourceComponent>(false).FirstOrDefault() != null)
 					{
-						//BatterySystem.Logger.LogInfo("Draining item: " + item + item.GetItemComponentsInChildren<ResourceComponent>(false).FirstOrDefault());
+						BatterySystem.Logger.LogInfo("Draining item: " + item + item.GetItemComponentsInChildren<ResourceComponent>(false).FirstOrDefault());
 						item.GetItemComponentsInChildren<ResourceComponent>(false).First().Value -= 1 / 100f
 							* BatterySystemConfig.DrainMultiplier.Value; //2 hr
 
