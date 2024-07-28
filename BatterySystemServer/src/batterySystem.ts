@@ -1,11 +1,11 @@
 import { DependencyContainer } from "tsyringe";
 
-import { ILogger } from "@spt-aki/models/spt/utils/ILogger"
-import { IPostDBLoadMod } from "@spt-aki/models/external/IPostDBLoadMod";
-//import { CustomItemService } from "@spt-aki/services/mod/CustomItemService";
-//import { NewItemFromCloneDetails } from "@spt-aki/models/spt/mod/NewItemDetails";
-import { DatabaseServer } from "@spt-aki/servers/DatabaseServer";
-import { BaseClasses } from "@spt-aki/models/enums/BaseClasses"
+import { ILogger } from "@spt/models/spt/utils/ILogger"
+import { IPostDBLoadMod } from "@spt/models/external/IPostDBLoadMod";
+//import { CustomItemService } from "@spt/services/mod/CustomItemService";
+//import { NewItemFromCloneDetails } from "@spt/models/spt/mod/NewItemDetails";
+import { DatabaseServer } from "@spt/servers/DatabaseServer";
+import { BaseClasses } from "@spt/models/enums/BaseClasses"
 import * as config from "../config/config.json";
 import { TraderPurchaseData } from "../types/models/eft/profile/IAkiProfile";
 
