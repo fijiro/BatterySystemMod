@@ -36,10 +36,6 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dependencies\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="Aki.Reflection, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>Dependencies\Aki.Reflection.dll</HintPath>
-    </Reference>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dependencies\Assembly-CSharp.dll</HintPath>
@@ -63,6 +59,10 @@
     <Reference Include="Mono.Data.Sqlite, Version=4.0.0.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Dependencies\Mono.Data.Sqlite.dll</HintPath>
+    </Reference>
+    <Reference Include="spt-reflection, Version=3.9.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dependencies\spt-reflection.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -95,13 +95,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Dependencies\0Harmony.dll" />
-    <Content Include="Dependencies\Aki.Reflection.dll" />
     <Content Include="Dependencies\Assembly-CSharp.dll" />
     <Content Include="Dependencies\BepInEx.dll" />
     <Content Include="Dependencies\Comfort.dll" />
     <Content Include="Dependencies\ItemComponent.Types.dll" />
     <Content Include="Dependencies\ItemTemplate.Types.dll" />
     <Content Include="Dependencies\Mono.Data.Sqlite.dll" />
+    <Content Include="Dependencies\spt-reflection.dll" />
     <Content Include="Dependencies\UnityEngine.AudioModule.dll" />
     <Content Include="Dependencies\UnityEngine.CoreModule.dll" />
     <Content Include="Dependencies\UnityEngine.dll" />
