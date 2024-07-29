@@ -7,7 +7,7 @@ import { IPostDBLoadMod } from "@spt/models/external/IPostDBLoadMod";
 import { DatabaseServer } from "@spt/servers/DatabaseServer";
 import { BaseClasses } from "@spt/models/enums/BaseClasses"
 import * as config from "../config/config.json";
-import { TraderPurchaseData } from "../types/models/eft/profile/IAkiProfile";
+import { TraderPurchaseData } from "@spt/models/eft/profile/ISptProfile";
 
 class Mod implements IPostDBLoadMod {
     private batteryType = "";
