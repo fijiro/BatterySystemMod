@@ -134,6 +134,7 @@ namespace BatterySystem
 			if (playerField.Weapon == null) return;
 
 			Player weaponOwnerPlayer = Singleton<GameWorld>.Instance.GetAlivePlayerByProfileID(playerField.Weapon.Owner.ID);
+			if (weaponOwnerPlayer == null) return;
 			if (!weaponOwnerPlayer.IsYourPlayer) return;
 			
 			BatterySystem.CheckSightIfDraining();
