@@ -54,9 +54,33 @@ namespace BatterySystem
                 //Delay draining batteries a bit, to allow mods like Realism-Mod to generate them first
                 await Task.Delay(1000);
 
+				AddBatteriesToBot(__instance);
                 DrainSpawnedBattery(__instance);
 			}
 		}
+		
+        private static void AddBatteriesToBot(Player botPlayer)
+        {
+            Inventory _botInventory = botPlayer.InventoryControllerClass.Inventory;
+            Item AAbatteryItem = Singleton<ItemFactory>.Instance.GetPresetItem("5672cb124bdc2d1a0f8b4568");
+            Item CR2032Item = Singleton<ItemFactory>.Instance.GetPresetItem("5672cb304bdc2dc2088b456a");
+            Item CR123batteryItem = Singleton<ItemFactory>.Instance.GetPresetItem("590a358486f77429692b2790");
+            foreach (Item item in _botInventory.Equipment.GetAllItems())
+            {
+                if (item is LootItemClass lootItem)
+                {
+                    foreach (Slot slot in lootItem.AllSlots)
+                    {
+                        if (slot.CheckCompatibility(AAbatteryItem))
+                            slot.ChangeContainedItemDirectly(AAbatteryItem);
+                        if (slot.CheckCompatibility(CR2032Item))
+                            slot.ChangeContainedItemDirectly(CR2032Item);
+                        if (slot.CheckCompatibility(CR123batteryItem))
+                            slot.ChangeContainedItemDirectly(CR123batteryItem);
+                    }
+                }
+            }
+        }
 
 		private static void DrainSpawnedBattery(Player botPlayer)
 		{
