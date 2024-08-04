@@ -52,8 +52,11 @@ namespace BatterySystem
 				//__instance.OnSightChangedEvent -= sight => BatterySystem.CheckSightIfDraining();
 			}
 			else //Spawned bots have their batteries drained
-			{
-				DrainSpawnedBattery(__instance);
+            {
+                //Delay draining batteries a bit, to allow mods like Realism-Mod to generate them first
+                await Task.Delay(1000);
+
+                DrainSpawnedBattery(__instance);
 			}
 		}
 
