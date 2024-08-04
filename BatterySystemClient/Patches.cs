@@ -20,7 +20,6 @@ namespace BatterySystem
 {
 	public class PlayerInitPatch : ModulePatch
 	{
-		private static FieldInfo _inventoryField = null;
 		private static InventoryControllerClass _inventoryController = null;
 		private static InventoryControllerClass _botInventory = null;
 		public static FieldInfo nvgOnField = null;
@@ -29,7 +28,6 @@ namespace BatterySystem
 
 		protected override MethodBase GetTargetMethod()
 		{
-			_inventoryField = AccessTools.Field(typeof(Player), "_inventoryController");
 			nvgOnField = AccessTools.Field(typeof(NightVision), "_on");
 			thermalOnField = AccessTools.Field(typeof(ThermalVision), "On");
 
@@ -45,7 +43,7 @@ namespace BatterySystem
 
 			if (__instance.IsYourPlayer)
 			{
-				_inventoryController = (InventoryControllerClass)_inventoryField.GetValue(__instance); //Player Inventory
+				_inventoryController = __instance.InventoryControllerClass; //Player Inventory
 				BatterySystem.sightMods.Clear(); // remove old sight entries that were saved from previous raid
 				BatterySystem.lightMods.Clear(); // same for tactical devices
 				BatterySystem.SetEarPieceComponents();
@@ -62,8 +60,8 @@ namespace BatterySystem
 
 		private static void DrainSpawnedBattery(Player botPlayer)
 		{
-			_botInventory = (InventoryControllerClass)_inventoryField.GetValue(botPlayer);
-			foreach (Item item in _botInventory.EquipmentItems)
+            Inventory _botInventory = botPlayer.InventoryControllerClass.Inventory;
+            foreach (Item item in _botInventory.Equipment.GetAllItems())
 			{
 				//batteries charge depends on their max charge and bot level
 				for (int i = 0; i < item.GetItemComponentsInChildren<ResourceComponent>().Count(); i++)
