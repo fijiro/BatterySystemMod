@@ -1,4 +1,4 @@
-﻿using Aki.Reflection.Patching;
+﻿using SPT.Reflection.Patching;
 using BatterySystem.Configs;
 using BSG.CameraEffects;
 using EFT.Animations;
@@ -14,7 +14,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using Comfort.Common;
-using Aki.Reflection.Utils;
+using SPT.Reflection.Utils;
 
 namespace BatterySystem
 {
