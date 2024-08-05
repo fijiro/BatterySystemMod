@@ -113,13 +113,6 @@ class Mod implements IPostDBLoadMod {
                         "_proto": "55d30c4c4bdc2db4468b457e"
                     }
                 );
-                for (let bot in botDB) {
-                    botDB[bot].inventory.mods[id] = {
-                        "mod_equipment": [
-                            this.batteryType
-                        ]
-                    }
-                }
             }
         }
         //change spawn% for batteries on bots. the durability is adjusted in a patch.

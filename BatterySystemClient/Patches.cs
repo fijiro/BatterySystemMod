@@ -20,7 +20,6 @@ namespace BatterySystem
 {
 	public class PlayerInitPatch : ModulePatch
 	{
-		private static FieldInfo _inventoryField = null;
 		private static InventoryControllerClass _inventoryController = null;
 		private static InventoryControllerClass _botInventory = null;
 		public static FieldInfo nvgOnField = null;
@@ -29,7 +28,6 @@ namespace BatterySystem
 
 		protected override MethodBase GetTargetMethod()
 		{
-			_inventoryField = AccessTools.Field(typeof(Player), "_inventoryController");
 			nvgOnField = AccessTools.Field(typeof(NightVision), "_on");
 			thermalOnField = AccessTools.Field(typeof(ThermalVision), "On");
 
@@ -45,22 +43,49 @@ namespace BatterySystem
 
 			if (__instance.IsYourPlayer)
 			{
-				_inventoryController = (InventoryControllerClass)_inventoryField.GetValue(__instance); //Player Inventory
+				_inventoryController = __instance.InventoryControllerClass; //Player Inventory
 				BatterySystem.sightMods.Clear(); // remove old sight entries that were saved from previous raid
 				BatterySystem.lightMods.Clear(); // same for tactical devices
 				BatterySystem.SetEarPieceComponents();
 				//__instance.OnSightChangedEvent -= sight => BatterySystem.CheckSightIfDraining();
 			}
-			else //Spawned bots have their batteries drained
-			{
-				DrainSpawnedBattery(__instance);
+			else if(__instance.IsAI)//Spawned bots have their batteries drained
+            {
+                //Delay draining batteries a bit, to allow mods like Realism-Mod to generate them first
+                await Task.Delay(1000);
+
+				AddBatteriesToBot(__instance);
+                DrainSpawnedBattery(__instance);
 			}
 		}
+		
+        private static void AddBatteriesToBot(Player botPlayer)
+        {
+            Inventory _botInventory = botPlayer.InventoryControllerClass.Inventory;
+            Item AAbatteryItem = Singleton<ItemFactory>.Instance.GetPresetItem("5672cb124bdc2d1a0f8b4568");
+            Item CR2032Item = Singleton<ItemFactory>.Instance.GetPresetItem("5672cb304bdc2dc2088b456a");
+            Item CR123batteryItem = Singleton<ItemFactory>.Instance.GetPresetItem("590a358486f77429692b2790");
+            foreach (Item item in _botInventory.Equipment.GetAllItems())
+            {
+                if (item is LootItemClass lootItem)
+                {
+                    foreach (Slot slot in lootItem.AllSlots)
+                    {
+                        if (slot.CheckCompatibility(AAbatteryItem))
+                            slot.Add(AAbatteryItem.CloneItem(), false);
+                        if (slot.CheckCompatibility(CR2032Item))
+                            slot.Add(CR2032Item.CloneItem(), false);
+                        if (slot.CheckCompatibility(CR123batteryItem))
+                            slot.Add(CR123batteryItem.CloneItem(), false);
+                    }
+                }
+            }
+        }
 
 		private static void DrainSpawnedBattery(Player botPlayer)
 		{
-			_botInventory = (InventoryControllerClass)_inventoryField.GetValue(botPlayer);
-			foreach (Item item in _botInventory.EquipmentItems)
+            Inventory _botInventory = botPlayer.InventoryControllerClass.Inventory;
+            foreach (Item item in _botInventory.Equipment.GetAllItems())
 			{
 				//batteries charge depends on their max charge and bot level
 				for (int i = 0; i < item.GetItemComponentsInChildren<ResourceComponent>().Count(); i++)
