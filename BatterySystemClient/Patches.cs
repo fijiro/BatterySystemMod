@@ -126,14 +126,18 @@ namespace BatterySystem
 		[PatchPostfix]
 		public static void Postfix(ref ProceduralWeaponAnimation __instance)
 		{
-			if (__instance != null)
-			{
-				var playerField = (Player.FirearmController)_firearmControllerField.GetValue(__instance);
-				if (BatterySystemPlugin.InGame() && playerField?.Weapon != null && Singleton<GameWorld>.Instance.GetAlivePlayerByProfileID(playerField.Weapon.Owner.ID).IsYourPlayer)
-				{
-					BatterySystem.CheckSightIfDraining();
-				}
-			}
+			if (__instance == null) return;
+
+			var playerField = (Player.FirearmController)_firearmControllerField.GetValue(__instance);
+			if (!BatterySystemPlugin.InGame()) return;
+			if (playerField == null) return;
+			if (playerField.Weapon == null) return;
+
+			Player weaponOwnerPlayer = Singleton<GameWorld>.Instance.GetAlivePlayerByProfileID(playerField.Weapon.Owner.ID);
+			if (weaponOwnerPlayer == null) return;
+			if (!weaponOwnerPlayer.IsYourPlayer) return;
+			
+			BatterySystem.CheckSightIfDraining();
 		}
 	}
 	//Throws NullRefError?
