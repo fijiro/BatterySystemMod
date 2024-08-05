@@ -72,11 +72,11 @@ namespace BatterySystem
                     foreach (Slot slot in lootItem.AllSlots)
                     {
                         if (slot.CheckCompatibility(AAbatteryItem))
-                            slot.ChangeContainedItemDirectly(AAbatteryItem);
+                            slot.Add(AAbatteryItem.CloneItem(), false);
                         if (slot.CheckCompatibility(CR2032Item))
-                            slot.ChangeContainedItemDirectly(CR2032Item);
+                            slot.Add(CR2032Item.CloneItem(), false);
                         if (slot.CheckCompatibility(CR123batteryItem))
-                            slot.ChangeContainedItemDirectly(CR123batteryItem);
+                            slot.Add(CR123batteryItem.CloneItem(), false);
                     }
                 }
             }
